@@ -1,14 +1,22 @@
-﻿namespace OebbLokFinder;
+﻿using Infrastructure;
+using Service;
+
+namespace OebbLokFinder;
 
 public partial class MainPage : TabbedPage
 {
-    public MainPage()
+    public Database Database { get; set; }
+
+    public OebbWebService OebbWebService { get; set; }
+
+    public MainPage(Database database, OebbWebService oebbWebService)
     {
+        Database = database;
+        OebbWebService = oebbWebService;
         InitializeComponent();
-        Children.Add(new ContentPage() {Title="TEST" });
-        Children.Add(new ContentPage() {Title="TEST" });
+        Children.Add(new LokFinder(Database, OebbWebService));
+        Children.Add(new VehicleManagment());
         Children.Add(new Settings());
     }
-
 }
 
