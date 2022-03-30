@@ -1,5 +1,6 @@
 ﻿namespace OebbLokFinder;
 using Microsoft.Extensions.DependencyInjection;
+using Infrastructure;
 
 public static class MauiProgram
 {
@@ -10,7 +11,7 @@ public static class MauiProgram
         {
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
         });
-        builder.Services.add
+        builder.Services.AddDbContext<Database>();
         return builder.Build();
     }
 }
