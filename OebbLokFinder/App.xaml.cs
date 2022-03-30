@@ -1,11 +1,28 @@
-﻿namespace OebbLokFinder;
+﻿using Infrastructure;
+using Service;
+
+namespace OebbLokFinder;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
+    public Database Database { get; set; }
 
-		MainPage = new MainPage();
-	}
+    public OebbWebService OebbWebService { get; set; }
+
+    public App(Database database, OebbWebService oebbWebService)
+    {
+        Database = database;
+        OebbWebService = oebbWebService;
+        InitializeComponent();
+
+        using (var db = new Database())
+        {
+            db.Database.EnsureDeleted();
+            if (db.Database.EnsureCreated())
+            {
+            }
+        }
+        MainPage = new MainPage(database, oebbWebService);
+    }
+
 }
