@@ -5,18 +5,16 @@ namespace OebbLokFinder;
 
 public partial class MainPage : TabbedPage
 {
-    public Database Database { get; set; }
 
-    public OebbWebService OebbWebService { get; set; }
-
-    public MainPage(Database database, OebbWebService oebbWebService)
+    public MainPage(IServiceProvider serviceProvider)
     {
-        Database = database;
-        OebbWebService = oebbWebService;
         InitializeComponent();
-        Children.Add(new LokFinder(Database, OebbWebService));
-        Children.Add(new VehicleManagment());
-        Children.Add(new Settings());
+        Children.Add(new LokFinder(serviceProvider));
+        Children.Add(new VehicleManagment(serviceProvider));
+        Children.Add(new Settings(serviceProvider));
+        ServiceProvider = serviceProvider;
     }
+
+    public IServiceProvider ServiceProvider { get; }
 }
 
