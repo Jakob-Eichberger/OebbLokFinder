@@ -14,11 +14,19 @@ namespace Model
 
         public string Name { get; set; }
 
-        public VehicleClassification VehicleClassification { get; set; }
+        [MaxLength(4)]
+        public int ClassNumber { get; set; }
+
+        [MaxLength(4)]
+        public int SerialNumber { get; set; }
 
         public bool AddedManually { get; set; } = false;
 
         public List<Stop> Stops { get; set; } = new();
+
+        public override bool Equals(object obj) => obj is Vehicle vehicle && ClassNumber == vehicle.ClassNumber && SerialNumber == vehicle.SerialNumber;
+
+        public override int GetHashCode() => HashCode.Combine(ClassNumber, SerialNumber);
     }
 
 }
