@@ -84,5 +84,7 @@
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
 	</PropertyGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionOebbLokFinderHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 	
 </Project>
