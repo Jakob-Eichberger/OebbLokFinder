@@ -10,72 +10,43 @@ namespace Service
 {
     public class BaseService
     {
-        protected readonly Database _db;
+        public Database Db { get; private set; }
 
         public BaseService(Database db)
         {
-            _db = db;
+            Db = db;
         }
 
-        public IQueryable<TEntity> GetTable<TEntity>() where TEntity : class => _db.Set<TEntity>();
+        public IQueryable<TEntity> GetTable<TEntity>() where TEntity : class => Db.Set<TEntity>();
 
         protected async Task AddAsync<TEntity>(TEntity obj) where TEntity : class
         {
-            try
-            {
-                await _db.Set<TEntity>().AddAsync(obj);
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (DbUpdateException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (Exception) { throw; }
+            await Db.Set<TEntity>().AddAsync(obj);
+            await Db.SaveChangesAsync();
         }
 
         protected void Add<TEntity>(TEntity obj) where TEntity : class
         {
-            try
-            {
-                _db.Set<TEntity>().Add(obj);
-                _db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (DbUpdateException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (Exception) { throw; }
+            Db.Set<TEntity>().Add(obj);
+            Db.SaveChanges();
         }
 
         protected async Task DeleteAsync<TEntity>(TEntity obj) where TEntity : class
         {
-            try
-            {
-                _db.Set<TEntity>().Remove(obj);
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateException) { throw new ApplicationException("Bei der Operation ist ein fehler aufgetreten."); }
-            catch (Exception) { throw; }
+            Db.Set<TEntity>().Remove(obj);
+            await Db.SaveChangesAsync();
         }
 
         protected void Update<TEntity>(TEntity obj) where TEntity : class
         {
-            try
-            {
-                _db.Set<TEntity>().Update(obj);
-                _db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (DbUpdateException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (Exception) { throw; }
+            Db.Set<TEntity>().Update(obj);
+            Db.SaveChanges();
         }
 
         protected async Task UpdateAsync<TEntity>(TEntity obj) where TEntity : class
         {
-            try
-            {
-                _db.Set<TEntity>().Update(obj);
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (DbUpdateException) { throw new ApplicationException($"Bei der Operation ist ein fehler aufgetreten."); }
-            catch (Exception) { throw; }
+            Db.Set<TEntity>().Update(obj);
+            await Db.SaveChangesAsync();
         }
 
     }
