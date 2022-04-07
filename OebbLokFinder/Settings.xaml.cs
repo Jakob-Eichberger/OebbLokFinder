@@ -2,7 +2,7 @@ namespace OebbLokFinder;
 
 public partial class Settings : ContentPage
 {
-	public Settings()
+	public Settings(IServiceProvider serviceProvider)
 	{
 		InitializeComponent();
 	}
