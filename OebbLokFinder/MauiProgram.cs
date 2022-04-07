@@ -14,6 +14,10 @@ public static class MauiProgram
         });
         builder.Services.AddDbContext<Database>();
         builder.Services.AddSingleton<OebbWebService>();
+        builder.Services.AddSingleton<StationService>();
+        builder.Services.AddSingleton<VehicleService>();
+
+        ServiceProvider i = builder.Services.BuildServiceProvider();
         return builder.Build();
     }
 }
