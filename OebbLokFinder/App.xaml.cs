@@ -5,24 +5,21 @@ namespace OebbLokFinder;
 
 public partial class App : Application
 {
-    public Database Database { get; set; }
 
-    public OebbWebService OebbWebService { get; set; }
-
-    public App(Database database, OebbWebService oebbWebService)
+    public App(IServiceProvider serviceProvider)
     {
-        Database = database;
-        OebbWebService = oebbWebService;
+        ServiceProvider = serviceProvider;
         InitializeComponent();
 
         using (var db = new Database())
         {
-            db.Database.EnsureDeleted();
+            //db.Database.EnsureDeleted();
             if (db.Database.EnsureCreated())
             {
             }
         }
-        MainPage = new MainPage(database, oebbWebService);
+        MainPage = new MainPage(ServiceProvider);
     }
 
+    public IServiceProvider ServiceProvider { get; }
 }
