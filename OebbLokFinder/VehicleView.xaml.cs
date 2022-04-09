@@ -37,7 +37,7 @@ public partial class VehicleView : ContentView
         Vehicle = Db.Vehicles.FirstOrDefault(e => e.Id == Vehicle.Id);
         Db.Vehicles.Remove(Vehicle);
         Db.SaveChanges();
-        OnDelete?.Invoke(this);
+        OnDelete(this);
     }
 
     private void ESerialNumber_TextChanged(object sender, TextChangedEventArgs e)
