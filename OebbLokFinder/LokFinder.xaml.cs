@@ -36,15 +36,10 @@ public partial class LokFinder : ContentPage, INotifyPropertyChanged
     }
 }
 
-public class Stop : Border
+public class Stop : Frame
 {
     public Stop(Model.Stop stop)
     {
-        StrokeThickness = 5;
-        Stroke = Colors.Black;
-        Margin = 5;
-        Padding = 5;
-        HorizontalOptions = LayoutOptions.Fill;
 
         var c = new StackLayout
         {
@@ -56,7 +51,7 @@ public class Stop : Border
         }
         if (stop.Arrival is DateTime)
         {
-            c.Add(new Label() { Text = $"Arrival:   {stop.Arrival}"});
+            c.Add(new Label() { Text = $"Arrival:   {stop.Arrival}" });
         }
         c.Add(new Label() { Text = $"Departure: {stop.Departure}" });
         Content = c;
