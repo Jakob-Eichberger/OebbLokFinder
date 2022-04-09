@@ -19,9 +19,7 @@
         <Label Text="Station:" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Margin="5" Padding="5"/>
         <Picker ItemsSource="{Binding Stations}" SelectedItem="{Binding Station}" SelectedIndexChanged="Picker_SelectedIndexChanged" VerticalOptions="Center" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="1"/>
         <ScrollView  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always">
-            <VerticalStackLayout x:Name="VSLStops">
-
-            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="VSLStops"/>
         </ScrollView>
     </Grid>
 </ContentPage>
