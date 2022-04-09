@@ -37,7 +37,7 @@ namespace Service
         /// <param name="vehicleName"></param>
         /// <param name="addedManually"></param>
         /// <returns></returns>
-        public async Task UpdateStopsAsync(int classNumber, int serialNumber, string vehicleName = null, bool addedManually = true)
+        public async Task UpdateStopsAsync(int classNumber, int serialNumber, string vehicleName = null, bool addedManually = true) => await Task.Run(async () =>
         {
             Vehicle vehicle = await VehicleService.GetOrCreatVehicleAsync(classNumber, serialNumber, vehicleName, addedManually);
 
@@ -59,9 +59,9 @@ namespace Service
 
             await VehicleService.UpdateVehilce(vehicle);
             FetchedData?.Invoke(null, null);
-        }
+        });
 
-        public async Task UpdateStopsForAllVehicles(Action<double>? vehicleLoaded = null)
+        public async Task UpdateStopsForAllVehicles(Action<double>? vehicleLoaded = null) => await Task.Run(async () =>
         {
             vehicleLoaded?.Invoke(0);
             var rnd = new Random();
@@ -74,18 +74,18 @@ namespace Service
                 vehicleLoaded?.Invoke(count++ / max);
             }
             FetchedData?.Invoke(null, null);
-        }
+        });
 
-        private async Task<IEnumerable<VehicleJsonMap>> GetVehicleJsonMapListAsync(int classNumber, int serialNumber)
+        private async Task<IEnumerable<VehicleJsonMap>> GetVehicleJsonMapListAsync(int classNumber, int serialNumber) => await Task.Run(async () =>
         {
             var uri = new Uri(@$"{ApiURL}{classNumber:D4}.{serialNumber:D4}");
             var response = await new HttpClient().GetStringAsync(uri);
             IEnumerable<VehicleJsonMap> List = JsonConvert.DeserializeObject<List<VehicleJsonMap>>(response);
             FetchedData?.Invoke(null, null);
             return List;
-        }
+        });
 
-        public async Task UpdateVehilcesFromLokfinderOebbWebsiteListe()
+        public async Task UpdateVehilcesFromLokfinderOebbWebsiteListe() => await Task.Run(async () =>
         {
             VehicleService.RemoveAllAutomaticallyAddedVehicles();
 
@@ -108,7 +108,7 @@ namespace Service
 
             VehicleService.AddVehicleRange(vehicles);
             FetchedData?.Invoke(null, null);
-        }
+        });
 
         private class VehicleJsonMap
         {
