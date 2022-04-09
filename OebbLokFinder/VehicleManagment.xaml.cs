@@ -43,7 +43,7 @@ public partial class VehicleManagment : ContentPage, INotifyPropertyChanged
         };
 
         VSLVehicles.Children.Clear();
-        Db.Vehicles.ToList().OrderByDescending(e=>e.Value).Select(e => new VehicleView(ServiceProvider, e, OnDelete)).ToList().ForEach(e => VSLVehicles.Children.Add(e));
+        Db.Vehicles.ToList().OrderByDescending(e => e.Value).Select(e => new VehicleView(ServiceProvider, e, OnDelete)).ToList().ForEach(e => VSLVehicles.Children.Add(e));
         VSLVehicles.Children.Add(button);
         OnPropertyChanged(nameof(VSLVehicles.Parent));
     }
