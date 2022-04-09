@@ -31,7 +31,8 @@ public partial class LokFinder : ContentPage, INotifyPropertyChanged
         var stops = Db.Stops.Include(e => e.Vehicle).Where(e => e.Station.StationName == Station).OrderBy(e => e.Arrival ?? e.Departure);
         foreach (var stop in stops)
         {
-            VSLStops.Add(new Stop(stop));
+            //VSLStops.Add(new Stop(stop));
+            VSLStops.Add(new StopView(stop));
         }
     }
 }
@@ -40,6 +41,8 @@ public class Stop : Frame
 {
     public Stop(Model.Stop stop)
     {
+        Padding = new Thickness(8);
+        Margin = new Thickness(5);
 
         var c = new StackLayout
         {
@@ -49,11 +52,11 @@ public class Stop : Frame
         {
             c.Add(new Label() { Text = $"{stop.Vehicle.Name}" });
         }
-        if (stop.Arrival is DateTime)
+        if (stop.Arrival is DateTime a)
         {
-            c.Add(new Label() { Text = $"Arrival:   {stop.Arrival}" });
+            c.Add(new Label() { Text = $"Arrival:\t{TimeZoneInfo.ConvertTimeFromUtc(a, TimeZoneInfo.Local):dd/MM/yy hh:mm}" });
         }
-        c.Add(new Label() { Text = $"Departure: {stop.Departure}" });
+        c.Add(new Label() { Text = $"Departure: {TimeZoneInfo.ConvertTimeFromUtc(stop.Departure, TimeZoneInfo.Local):dd/MM/yy hh:mm}" });
         Content = c;
     }
 }
