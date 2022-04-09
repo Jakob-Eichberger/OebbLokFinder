@@ -25,8 +25,12 @@ namespace Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var path = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}LokFinder{Path.DirectorySeparatorChar}";
+            if(!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlite($"Data Source=\"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}Loco.sqlite\"");
+                optionsBuilder.UseSqlite($"Data Source=\"{path}Loco.sqlite\"");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
