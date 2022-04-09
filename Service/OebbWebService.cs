@@ -25,7 +25,9 @@ namespace Service
 
         public VehicleService VehicleService { get; }
 
-        private string ApiURL => @"https://konzern-apps.web.oebb.at/lok/index/";
+        private const string ApiURL = "https://konzern-apps.web.oebb.at/lok/index/";
+
+        public event EventHandler FetchedData;
 
         /// <summary>
         /// Updates the <see cref="Stop"/>s for a given <paramref name="classNumber"/> and <paramref name="serialNumber"/> combination in the database.
@@ -56,6 +58,7 @@ namespace Service
             }))));
 
             await VehicleService.UpdateVehilce(vehicle);
+            FetchedData?.Invoke(null, null);
         }
 
         public async Task UpdateStopsForAllVehicles(Action<double>? vehicleLoaded = null)
@@ -70,6 +73,7 @@ namespace Service
                 await Task.Delay(new TimeSpan(0, 0, rnd.Next(4, 10)));
                 vehicleLoaded?.Invoke(count++ / max);
             }
+            FetchedData?.Invoke(null, null);
         }
 
         private async Task<IEnumerable<VehicleJsonMap>> GetVehicleJsonMapListAsync(int classNumber, int serialNumber)
@@ -77,6 +81,7 @@ namespace Service
             var uri = new Uri(@$"{ApiURL}{classNumber:D4}.{serialNumber:D4}");
             var response = await new HttpClient().GetStringAsync(uri);
             IEnumerable<VehicleJsonMap> List = JsonConvert.DeserializeObject<List<VehicleJsonMap>>(response);
+            FetchedData?.Invoke(null, null);
             return List;
         }
 
@@ -102,6 +107,7 @@ namespace Service
             }
 
             VehicleService.AddVehicleRange(vehicles);
+            FetchedData?.Invoke(null, null);
         }
 
         private class VehicleJsonMap
