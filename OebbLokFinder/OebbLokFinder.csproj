@@ -84,6 +84,9 @@
 	  <MauiXaml Update="Settings.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="StopView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="VehicleManagment.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
