@@ -21,7 +21,7 @@ namespace Service
 
         public async Task<Vehicle> GetOrCreatVehicleAsync(int classNumber, int serialNumber, string name = null, bool addedManually = true)
         {
-            if (classNumber <= 0 || serialNumber < 0)
+            if (classNumber < 0 || serialNumber < 0)
                 throw new ApplicationException($"Invalid paramters");
 
             if (Db.Vehicles.FirstOrDefault(e => e.SerialNumber == serialNumber && e.ClassNumber == classNumber) is not Vehicle vehicle)
