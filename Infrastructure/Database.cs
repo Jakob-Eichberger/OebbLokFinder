@@ -19,8 +19,6 @@ namespace Infrastructure
 
         public virtual DbSet<Stop> Stops => Set<Stop>();
 
-        //public virtual DbSet<Station> Stations => Set<Station>();
-
         public virtual DbSet<Vehicle> Vehicles => Set<Vehicle>();
 
         public void InvokeCollectionChanged() => CollectionChanged?.Invoke(this, new EventArgs());
