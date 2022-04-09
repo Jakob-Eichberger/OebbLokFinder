@@ -11,9 +11,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
-        <ScrollView Grid.Row="0" VerticalOptions="Start">
-            <StackLayout x:Name="VSLVehicles" VerticalOptions="Fill" IsVisible="{Binding Test}">
+        <ScrollView Grid.Row="0" >
+            <StackLayout x:Name="VSLVehicles" VerticalOptions="Fill">
             </StackLayout>
         </ScrollView>
         <StackLayout Grid.Row="1" x:Name="SLUpdate"  >
