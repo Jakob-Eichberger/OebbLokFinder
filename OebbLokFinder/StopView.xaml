@@ -18,8 +18,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="AUTO"/>
-                    <ColumnDefinition Width="AUTO"/>
+                    <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -28,14 +27,17 @@
                     <Label Text="." FontAttributes="Bold"/>
                     <Label Text="{Binding Stop.Vehicle.SerialNumber}" FontAttributes="Bold"/>
                 </HorizontalStackLayout>
-                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Stop.Vehicle.Name}"/>
-                <BoxView Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2"  Color="Black" HeightRequest="1" />
+                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Stop.Vehicle.Name}" />
+
+                <BoxView Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Color="Black" HeightRequest="1" />
 
                 <Label Grid.Row="2" Grid.Column="0" Text="Arrival: " FontAttributes="Bold"/>
                 <Label Grid.Row="2" Grid.Column="1" Text="{Binding Stop.Arrival, Converter={StaticResource UtcToLocalDateTimeConverter}}"/>
 
                 <Label Grid.Row="3" Grid.Column="0" Text="Departure: " FontAttributes="Bold"/>
                 <Label Grid.Row="3" Grid.Column="1"  Text="{Binding Stop.Departure, Converter={StaticResource UtcToLocalDateTimeConverter}}"/>
+
+                <!--<Label Grid.Row="3" Grid.Column="4" Text="REEE" VerticalTextAlignment="End"/>-->
             </Grid>
         </Frame>
     </ContentView.Content>
