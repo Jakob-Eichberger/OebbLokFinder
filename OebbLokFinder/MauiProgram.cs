@@ -16,6 +16,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<OebbWebService>();
         builder.Services.AddSingleton<StationService>();
         builder.Services.AddSingleton<VehicleService>();
+        builder.Services.AddSingleton<SettingService>();
 
         ServiceProvider i = builder.Services.BuildServiceProvider();
         return builder.Build();
