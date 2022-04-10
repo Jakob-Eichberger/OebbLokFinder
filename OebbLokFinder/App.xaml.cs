@@ -13,10 +13,8 @@ public partial class App : Application
 
         using (var db = new Database())
         {
-            //db.Database.EnsureDeleted();
-            if (db.Database.EnsureCreated())
-            {
-            }
+            db.Database.EnsureDeleted();
+            db.Init();
         }
         MainPage = new MainPage(ServiceProvider);
     }
