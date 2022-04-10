@@ -14,11 +14,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="AUTO"/>
                 </Grid.ColumnDefinitions>
-                <Entry Grid.Column="0" MaxLength="4" Keyboard="Numeric" TextChanged="EClassNumber_TextChanged" x:Name="EClassNumber" VerticalOptions="End" Placeholder="ClassNumber"></Entry>
+                <Entry Grid.Column="0" MaxLength="4" Keyboard="Numeric" VerticalOptions="End" Placeholder="ClassNumber" Text="{Binding Vehicle.ClassNumber}" IsTextPredictionEnabled="False" TextChanged="Entry_TextChanged" ></Entry>
                 <Label Grid.Column="1" Text="." Margin="0,12,0,0" ></Label>
-                <Entry Grid.Column="2" MaxLength="4" MinimumWidthRequest="10" Keyboard="Numeric" TextChanged="ESerialNumber_TextChanged" x:Name="ESerialNumber" VerticalOptions="End" Placeholder="SerialNumber"></Entry>
-                <Entry Grid.Column="3" MaxLength="100" Keyboard="Text" TextChanged="EName_TextChanged" x:Name="EName" VerticalOptions="End" Placeholder="Lokomotive name"></Entry>
-                <Button Grid.Column="4" Text="X" x:Name="BtnDelete" Clicked="BtnDelete_Clicked"  VerticalOptions="End"/>
+                <Entry Grid.Column="2" MaxLength="4" MinimumWidthRequest="10" Keyboard="Numeric" VerticalOptions="End" Placeholder="SerialNumber" Text="{Binding Vehicle.SerialNumber}" IsTextPredictionEnabled="False" TextChanged="Entry_TextChanged"></Entry>
+                <Entry Grid.Column="3" MaxLength="100" Keyboard="Text" VerticalOptions="End" Placeholder="Lokomotive name" Text="{Binding Vehicle.Name}" TextChanged="Entry_TextChanged"></Entry>
+                <Button Grid.Column="4" Text="X" x:Name="BtnDelete" Clicked="BtnDelete_Clicked"  VerticalOptions="End" />
             </Grid>
         </Frame>
     </ContentView.Content>
