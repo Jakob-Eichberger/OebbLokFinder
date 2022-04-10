@@ -36,8 +36,6 @@
 
                 <Label Grid.Row="3" Grid.Column="0" Text="Departure: " FontAttributes="Bold"/>
                 <Label Grid.Row="3" Grid.Column="1"  Text="{Binding Stop.Departure, Converter={StaticResource UtcToLocalDateTimeConverter}}"/>
-
-                <!--<Label Grid.Row="3" Grid.Column="4" Text="REEE" VerticalTextAlignment="End"/>-->
             </Grid>
         </Frame>
     </ContentView.Content>
