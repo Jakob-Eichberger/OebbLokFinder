@@ -14,7 +14,7 @@ namespace OebbLokFinder.Converter
             if (value is null)
                 return null;
             else if (value is DateTime dt)
-                return $"{TimeZoneInfo.ConvertTimeFromUtc(dt, TimeZoneInfo.Local):dd/MM/yy hh:mm}";
+                return $"{TimeZoneInfo.ConvertTimeFromUtc(dt, TimeZoneInfo.Local):dd/MM/yy HH:mm}";
             else
                 throw new NotSupportedException();
         }
