@@ -37,7 +37,7 @@ namespace Service
         /// <param name="vehicleName"></param>
         /// <param name="addedManually"></param>
         /// <returns></returns>
-        public async Task UpdateStopsAsync(int classNumber, int serialNumber, string vehicleName = null, bool addedManually = true) => await Task.Run(async () =>
+        private async Task UpdateStopsAsync(int classNumber, int serialNumber, string vehicleName = null, bool addedManually = true) => await Task.Run(async () =>
         {
             Vehicle vehicle = await VehicleService.GetOrCreatVehicleAsync(classNumber, serialNumber, vehicleName, addedManually);
 
@@ -58,7 +58,6 @@ namespace Service
             }))));
 
             await VehicleService.UpdateVehilce(vehicle);
-            FetchedData?.Invoke(null, null);
         });
 
         public async Task UpdateStopsForAllVehicles(Action<double>? vehicleLoaded = null) => await Task.Run(async () =>
@@ -73,7 +72,7 @@ namespace Service
                 await Task.Delay(new TimeSpan(0, 0, rnd.Next(4, 10)));
                 vehicleLoaded?.Invoke(count++ / max);
             }
-            FetchedData?.Invoke(null, null);
+            FetchedData?.Invoke(this, null);
         });
 
         private async Task<IEnumerable<VehicleJsonMap>> GetVehicleJsonMapListAsync(int classNumber, int serialNumber) => await Task.Run(async () =>
@@ -81,7 +80,6 @@ namespace Service
             var uri = new Uri(@$"{ApiURL}{classNumber:D4}.{serialNumber:D4}");
             var response = await new HttpClient().GetStringAsync(uri);
             IEnumerable<VehicleJsonMap> List = JsonConvert.DeserializeObject<List<VehicleJsonMap>>(response);
-            FetchedData?.Invoke(null, null);
             return List;
         });
 
@@ -107,7 +105,7 @@ namespace Service
             }
 
             VehicleService.AddVehicleRange(vehicles);
-            FetchedData?.Invoke(null, null);
+            FetchedData?.Invoke(this, null);
         });
 
         private class VehicleJsonMap
