@@ -11,7 +11,7 @@ public partial class MainPage : TabbedPage
         InitializeComponent();
         Children.Add(new LokFinder(serviceProvider));
         Children.Add(new VehicleManagment(serviceProvider));
-        Children.Add(new Settings(serviceProvider));
+        //Children.Add(new Settings(serviceProvider));
         ServiceProvider = serviceProvider;
     }
 
