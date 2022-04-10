@@ -15,19 +15,67 @@ namespace Service
 {
     public class OebbWebService : BaseService
     {
+        private const string ApiURL = "https://konzern-apps.web.oebb.at/lok/index/";
+
         public OebbWebService(Database db, StationService stationService, VehicleService vehicleService) : base(db)
         {
             StationService = stationService;
             VehicleService = vehicleService;
         }
 
+        public event EventHandler FetchedData;
+
         public StationService StationService { get; }
 
         public VehicleService VehicleService { get; }
+      
+        public async Task UpdateStopsForAllVehicles(Action<double>? vehicleLoaded = null) => await Task.Run(async () =>
+                {
+                    vehicleLoaded?.Invoke(0);
+                    var rnd = new Random();
+                    double count = 0;
+                    double max = Db.Vehicles.Count();
+                    foreach (var vehicle in Db.Vehicles.ToList())
+                    {
+                        await UpdateStopsAsync(vehicle.ClassNumber, vehicle.SerialNumber, vehicle.Name, vehicle.AddedManually);
+                        await Task.Delay(new TimeSpan(0, 0, rnd.Next(4, 10)));
+                        vehicleLoaded?.Invoke(count++ / max);
+                    }
+                    FetchedData?.Invoke(this, null);
+                });
 
-        private const string ApiURL = "https://konzern-apps.web.oebb.at/lok/index/";
+        public async Task UpdateVehilcesFromLokfinderOebbWebsiteListe() => await Task.Run(async () =>
+                {
+                    VehicleService.RemoveAllAutomaticallyAddedVehicles();
 
-        public event EventHandler FetchedData;
+                    HtmlDocument htmlDoc = new();
+                    htmlDoc.LoadHtml(await new HttpClient().GetStringAsync("https://lokfinder.oebb.at/"));
+
+                    List<Vehicle> vehicles = new();
+                    foreach (var vehicle in htmlDoc.DocumentNode.SelectNodes("//oebb-lokfinder-lok"))
+                    {
+                        var match = new Regex(@"([0-9]{1,4})\.([0-9]{1,4})").Match(vehicle.GetAttributeValue("unit-number", ""));
+
+                        vehicles.Add(new Vehicle
+                        {
+                            AddedManually = false,
+                            ClassNumber = int.Parse(match.Groups[1].Value),
+                            SerialNumber = int.Parse(match.Groups[2].Value),
+                            Name = vehicle.GetAttributeValue("label", "")
+                        });
+                    }
+
+                    VehicleService.AddVehicleRange(vehicles);
+                    FetchedData?.Invoke(this, null);
+                });
+
+        private async Task<IEnumerable<VehicleJsonMap>> GetVehicleJsonMapListAsync(int classNumber, int serialNumber) => await Task.Run(async () =>
+                {
+                    var uri = new Uri(@$"{ApiURL}{classNumber:D4}.{serialNumber:D4}");
+                    var response = await new HttpClient().GetStringAsync(uri);
+                    IEnumerable<VehicleJsonMap> List = JsonConvert.DeserializeObject<List<VehicleJsonMap>>(response);
+                    return List;
+                });
 
         /// <summary>
         /// Updates the <see cref="Stop"/>s for a given <paramref name="classNumber"/> and <paramref name="serialNumber"/> combination in the database.
@@ -59,55 +107,7 @@ namespace Service
 
             await VehicleService.UpdateVehilce(vehicle);
         });
-
-        public async Task UpdateStopsForAllVehicles(Action<double>? vehicleLoaded = null) => await Task.Run(async () =>
-        {
-            vehicleLoaded?.Invoke(0);
-            var rnd = new Random();
-            double count = 0;
-            double max = Db.Vehicles.Count();
-            foreach (var vehicle in Db.Vehicles.ToList())
-            {
-                await UpdateStopsAsync(vehicle.ClassNumber, vehicle.SerialNumber, vehicle.Name, vehicle.AddedManually);
-                await Task.Delay(new TimeSpan(0, 0, rnd.Next(4, 10)));
-                vehicleLoaded?.Invoke(count++ / max);
-            }
-            FetchedData?.Invoke(this, null);
-        });
-
-        private async Task<IEnumerable<VehicleJsonMap>> GetVehicleJsonMapListAsync(int classNumber, int serialNumber) => await Task.Run(async () =>
-        {
-            var uri = new Uri(@$"{ApiURL}{classNumber:D4}.{serialNumber:D4}");
-            var response = await new HttpClient().GetStringAsync(uri);
-            IEnumerable<VehicleJsonMap> List = JsonConvert.DeserializeObject<List<VehicleJsonMap>>(response);
-            return List;
-        });
-
-        public async Task UpdateVehilcesFromLokfinderOebbWebsiteListe() => await Task.Run(async () =>
-        {
-            VehicleService.RemoveAllAutomaticallyAddedVehicles();
-
-            HtmlDocument htmlDoc = new();
-            htmlDoc.LoadHtml(await new HttpClient().GetStringAsync("https://lokfinder.oebb.at/"));
-
-            List<Vehicle> vehicles = new();
-            foreach (var vehicle in htmlDoc.DocumentNode.SelectNodes("//oebb-lokfinder-lok"))
-            {
-                var match = new Regex(@"([0-9]{1,4})\.([0-9]{1,4})").Match(vehicle.GetAttributeValue("unit-number", ""));
-
-                vehicles.Add(new Vehicle
-                {
-                    AddedManually = false,
-                    ClassNumber = int.Parse(match.Groups[1].Value),
-                    SerialNumber = int.Parse(match.Groups[2].Value),
-                    Name = vehicle.GetAttributeValue("label", "")
-                });
-            }
-
-            VehicleService.AddVehicleRange(vehicles);
-            FetchedData?.Invoke(this, null);
-        });
-
+     
         private class VehicleJsonMap
         {
             [JsonProperty("abbr")]
