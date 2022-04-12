@@ -4,8 +4,7 @@
              xmlns:local="clr-namespace:OebbLokFinder"
              x:DataType="local:LokFinder"
              x:Class="OebbLokFinder.LokFinder"
-             Title="Lok Finder"
-             BackgroundColor="White">
+             Title="Lok Finder">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="AUTO" />
