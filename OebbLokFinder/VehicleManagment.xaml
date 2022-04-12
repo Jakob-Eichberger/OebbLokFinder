@@ -6,7 +6,7 @@
              x:DataType="local:VehicleManagment"
              x:Class="OebbLokFinder.VehicleManagment"
              Title="Vehicle Managment"
-             BackgroundColor="White" x:Name="OebbLokFinder">
+             x:Name="OebbLokFinder">
     <Grid x:Name="grid" VerticalOptions="Fill">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
