@@ -2,7 +2,7 @@
 using OebbLokFinder.Infrastructure;
 using OebbLokFinder.Service;
 
-namespace OebbLokFinder
+namespace OebbLokFinder.View
 {
     public static class MauiProgram
     {
