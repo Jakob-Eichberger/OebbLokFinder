@@ -1,23 +1,28 @@
-﻿using Infrastructure;
-using Service;
+﻿using Microsoft.Extensions.DependencyInjection;
+using OebbLokFinder.Infrastructure;
+using OebbLokFinder.Model;
 
-namespace OebbLokFinder;
-
-public partial class App : Application
+namespace OebbLokFinder
 {
-
-    public App(IServiceProvider serviceProvider)
+    public partial class App : Application
     {
-        ServiceProvider = serviceProvider;
-        InitializeComponent();
+        public static IServiceProvider ServiceProvider { get; private set; } = default!;
 
-        using (var db = new Database())
+        public App(IServiceProvider serviceProvider)
         {
-            //db.Database.EnsureDeleted();
-            db.Init();
+            ServiceProvider = serviceProvider;
+            InitializeComponent();
+            using (var db = new Database())
+            {
+                //db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+                if (!db.Settings.Any())
+                {
+                    db.Settings.Add(new Setting());
+                    db.SaveChanges();
+                }
+            }
+            MainPage = new MainPage(ServiceProvider);
         }
-        MainPage = new MainPage(ServiceProvider);
     }
-
-    public IServiceProvider ServiceProvider { get; }
 }

@@ -1,20 +1,15 @@
-﻿using Infrastructure;
-using Service;
+﻿using OebbLokFinder.View;
 
-namespace OebbLokFinder;
-
-public partial class MainPage : TabbedPage
+namespace OebbLokFinder
 {
-
-    public MainPage(IServiceProvider serviceProvider)
+    public partial class MainPage : TabbedPage
     {
-        InitializeComponent();
-        Children.Add(new LokFinder(serviceProvider));
-        Children.Add(new VehicleManagment(serviceProvider));
-        //Children.Add(new Settings(serviceProvider));
-        ServiceProvider = serviceProvider;
+        public MainPage(IServiceProvider serviceProvider)
+        {
+            InitializeComponent();
+            ServiceProvider = serviceProvider;
+        }
+
+        public IServiceProvider ServiceProvider { get; }
     }
-
-    public IServiceProvider ServiceProvider { get; }
 }
-

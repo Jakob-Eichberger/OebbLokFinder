@@ -1,24 +1,32 @@
-﻿namespace OebbLokFinder;
-using Microsoft.Extensions.DependencyInjection;
-using Infrastructure;
-using Service;
+﻿using Microsoft.Extensions.Logging;
+using OebbLokFinder.Infrastructure;
+using OebbLokFinder.Service;
 
-public static class MauiProgram
+namespace OebbLokFinder
 {
-    public static MauiApp CreateMauiApp()
+    public static class MauiProgram
     {
-        var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+        public static MauiApp CreateMauiApp()
         {
-            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-        });
-        builder.Services.AddDbContext<Database>();
-        builder.Services.AddSingleton<OebbWebService>();
-        builder.Services.AddSingleton<StationService>();
-        builder.Services.AddSingleton<VehicleService>();
-        builder.Services.AddSingleton<SettingService>();
+            var builder = MauiApp.CreateBuilder();
+            builder.UseMauiApp<App>()
+                    .ConfigureFonts(fonts =>
+                    {
+                        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                        fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    });
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
 
-        ServiceProvider i = builder.Services.BuildServiceProvider();
-        return builder.Build();
+            builder.Services.AddDbContext<Database>();
+            builder.Services.AddSingleton<OebbWebService>();
+            builder.Services.AddSingleton<StationService>();
+            builder.Services.AddSingleton<VehicleService>();
+            builder.Services.AddSingleton<SettingService>();
+
+            ServiceProvider i = builder.Services.BuildServiceProvider();
+            return builder.Build();
+        }
     }
 }

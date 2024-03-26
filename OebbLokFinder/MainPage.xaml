@@ -1,6 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="OebbLokFinder.MainPage"
-            xmlns:local="clr-namespace:OebbLokFinder"> 
+             xmlns:local="clr-namespace:OebbLokFinder.View"
+             x:Class="OebbLokFinder.MainPage">
+    <TabbedPage.ItemTemplate>
+        <DataTemplate>
+            <ContentPage Title="{Binding Name}"
+                         IconImageSource="monkeyicon.png">
+                <StackLayout Padding="5, 25">
+                    <Label Text="{Binding Name}"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           HorizontalOptions="Center" />
+                    <!--<Image Source="{Binding PhotoUrl}"
+                           HorizontalOptions="Center"
+                           WidthRequest="200"
+                           HeightRequest="200" />-->
+                    <!--<StackLayout Padding="50, 10">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Family: "
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding Family}" />
+                        </StackLayout>
+                    </StackLayout>-->
+                </StackLayout>
+            </ContentPage>
+        </DataTemplate>
+    </TabbedPage.ItemTemplate>
+    <local:LokFinder></local:LokFinder>
+    <local:VehicleManagment></local:VehicleManagment>
 </TabbedPage>
