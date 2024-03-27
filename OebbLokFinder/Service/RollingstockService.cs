@@ -91,5 +91,21 @@ namespace OebbLokFinder.Service
             }
             await Db.UpdateAsync(rollingstock);
         }
+
+        /// <summary>
+        /// Removes a given <paramref name="rollingstock"/> from the database.
+        /// </summary>
+        /// <param name="rollingstock"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
+        public async Task RemoveRollingStockAsync(Rollingstock rollingstock)
+        {
+            if (!Db.Rollingstocks.Any(e => e.Id == rollingstock.Id))
+            {
+                throw new ApplicationException($"Failed to delete rolling stock because the object is not present in the database.");
+            }
+            await Db.RemoveAsync(rollingstock);
+            RollingstocksAddedOrDeleted?.Invoke(this, new());
+        }
     }
 }
