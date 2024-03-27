@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Config.Net;
+using Microsoft.Extensions.DependencyInjection;
 using OebbLokFinder.Infrastructure;
 using OebbLokFinder.Model;
+using OebbLokFinder.Service;
 
 namespace OebbLokFinder
 {
@@ -10,6 +12,8 @@ namespace OebbLokFinder
 
         public App(IServiceProvider serviceProvider)
         {
+
+
             ServiceProvider = serviceProvider;
             InitializeComponent();
             using (var db = new Database())

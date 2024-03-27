@@ -26,7 +26,7 @@ namespace OebbLokFinder.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var path = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}LokFinder{Path.DirectorySeparatorChar}";
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LokFinder");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
