@@ -16,11 +16,6 @@ namespace OebbLokFinder
             {
                 //db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                if (!db.Settings.Any())
-                {
-                    db.Settings.Add(new Setting());
-                    db.SaveChanges();
-                }
             }
             MainPage = new MainPage(ServiceProvider);
         }

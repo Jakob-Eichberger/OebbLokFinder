@@ -16,13 +16,11 @@ namespace OebbLokFinder.Infrastructure
         {
         }
 
-        public event EventHandler CollectionChanged;
+        public event EventHandler? CollectionChanged;
 
         public virtual DbSet<Stop> Stops => Set<Stop>();
 
         public virtual DbSet<Rollingstock> Rollingstocks => Set<Rollingstock>();
-
-        public virtual DbSet<Setting> Settings => Set<Setting>();
 
         public void InvokeCollectionChanged() => CollectionChanged?.Invoke(this, new EventArgs());
 
@@ -39,7 +37,6 @@ namespace OebbLokFinder.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Stop>().OwnsOne(e => e.Station);
-            modelBuilder.Entity<Setting>().Property(b => b.Properties).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
             OnModelCreatingPartial(modelBuilder);
         }
 

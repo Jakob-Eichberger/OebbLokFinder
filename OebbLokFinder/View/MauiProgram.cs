@@ -23,7 +23,6 @@ namespace OebbLokFinder.View
                             .AddSingleton<OebbWebService>()
                             .AddSingleton<StationService>()
                             .AddSingleton<RollingstockService>()
-                            .AddSingleton<SettingService>()
                             .AddLogging();
 
             ServiceProvider i = builder.Services.BuildServiceProvider();
