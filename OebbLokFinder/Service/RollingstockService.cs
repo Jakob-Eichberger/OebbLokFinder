@@ -74,7 +74,7 @@ namespace OebbLokFinder.Service
         /// <returns></returns>
         public async Task<List<int>> GetAllVehicleIds()
         {
-            return await Db.Rollingstocks.Select(e => e.Id).ToListAsync();
+            return await Db.Rollingstocks.OrderBy(e => e.ClassNumber).ThenBy(e => e.SerialNumber).Select(e => e.Id).ToListAsync();
         }
 
         /// <summary>
@@ -93,19 +93,19 @@ namespace OebbLokFinder.Service
         }
 
         /// <summary>
-        /// Removes a given <paramref name="rollingstock"/> from the database.
+        /// Removes a given <paramref name="rollingstock"/> from the database. If the <paramref name="rollingstock"/> is not found in the database no exception is thrown.
         /// </summary>
         /// <param name="rollingstock"></param>
         /// <returns></returns>
-        /// <exception cref="ApplicationException"></exception>
-        public async Task RemoveRollingStockAsync(Rollingstock rollingstock)
+        public async Task<bool> RemoveRollingStockAsync(Rollingstock rollingstock)
         {
-            if (!Db.Rollingstocks.Any(e => e.Id == rollingstock.Id))
+            if (Db.Rollingstocks.Any(e => e.Id == rollingstock.Id))
             {
-                throw new ApplicationException($"Failed to delete rolling stock because the object is not present in the database.");
+                await Db.RemoveAsync(rollingstock);
+                RollingstocksAddedOrDeleted?.Invoke(this, new());
+                return true;
             }
-            await Db.RemoveAsync(rollingstock);
-            RollingstocksAddedOrDeleted?.Invoke(this, new());
+            return false;
         }
     }
 }
