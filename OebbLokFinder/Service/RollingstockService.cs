@@ -68,8 +68,6 @@ namespace OebbLokFinder.Service
             return rollingstock;
         }
 
-        public async Task UpdateVehilce(Rollingstock rollingstock) => await Db.UpdateAsync(rollingstock);
-
         /// <summary>
         /// Gets all ids for every rollingstock object in the context.
         /// </summary>
@@ -77,6 +75,21 @@ namespace OebbLokFinder.Service
         public async Task<List<int>> GetAllVehicleIds()
         {
             return await Db.Rollingstocks.Select(e => e.Id).ToListAsync();
+        }
+
+        /// <summary>
+        /// Updates a <paramref name="rollingstock"/> object in the database.
+        /// </summary>
+        /// <param name="rollingstock"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
+        public async Task UpdateRollingStock(Rollingstock rollingstock)
+        {
+            if (!Db.Rollingstocks.Any(e => e.Id == rollingstock.Id))
+            {
+                throw new ApplicationException($"Failed to update rolling stock because the object is not present in the database.");
+            }
+            await Db.UpdateAsync(rollingstock);
         }
     }
 }
