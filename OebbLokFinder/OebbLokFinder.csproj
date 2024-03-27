@@ -66,10 +66,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\StopsPage.xaml">
+	  <MauiXaml Update="View\Stops\StopsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\StopView.xaml">
+	  <MauiXaml Update="View\Stops\StopView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -79,7 +79,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\StopsPage.xaml.cs">
+	  <Compile Update="View\Stops\StopsPage.xaml.cs">
 	    <DependentUpon>StopsPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
