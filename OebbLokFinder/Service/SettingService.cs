@@ -31,6 +31,6 @@ namespace OebbLokFinder.Service
         /// Holds the hours of how often a rolling stock should be refreshed. Use 0 to turn automatic refresh off.
         /// </summary>
         [Option(DefaultValue = 0)]
-        public uint RefreshRollingStockCycle { get; set; }
+        public int RefreshRollingStockCycle { get; set; }
     }
 }
