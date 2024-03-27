@@ -26,7 +26,7 @@ namespace OebbLokFinder.Model
 
         public int Value => int.Parse($"{ClassNumber:D4}{SerialNumber:D4}");
 
-        public override bool Equals(object obj) => obj is Rollingstock rollingstock && ClassNumber == rollingstock.ClassNumber && SerialNumber == rollingstock.SerialNumber;
+        public override bool Equals(object? obj) => obj is Rollingstock rollingstock && ClassNumber == rollingstock.ClassNumber && SerialNumber == rollingstock.SerialNumber;
 
         public override int GetHashCode() => HashCode.Combine(ClassNumber, SerialNumber);
     }
