@@ -5,9 +5,9 @@ using System.ComponentModel;
 
 namespace OebbLokFinder.View;
 
-public partial class LokFinder : ContentPage, INotifyPropertyChanged
+public partial class StopsPage : ContentPage, INotifyPropertyChanged
 {
-    public LokFinder()
+    public StopsPage()
     {
         Db = App.ServiceProvider.GetRequiredService<Database>();
         WebService = App.ServiceProvider.GetRequiredService<OebbWebService>();

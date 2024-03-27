@@ -27,5 +27,5 @@
             </ContentPage>
         </DataTemplate>
     </TabbedPage.ItemTemplate>
-    <local:LokFinder></local:LokFinder>
+    <local:StopsPage></local:StopsPage>
 </TabbedPage>
