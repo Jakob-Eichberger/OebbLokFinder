@@ -83,7 +83,7 @@ namespace OebbLokFinder.Service
         /// <param name="rollingstock"></param>
         /// <returns></returns>
         /// <exception cref="ApplicationException"></exception>
-        public async Task UpdateRollingStock(Rollingstock rollingstock)
+        public async Task UpdateRollingStockAsync(Rollingstock rollingstock)
         {
             if (!Db.Rollingstocks.Any(e => e.Id == rollingstock.Id))
             {

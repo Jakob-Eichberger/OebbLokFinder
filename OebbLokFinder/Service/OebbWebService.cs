@@ -113,7 +113,7 @@ namespace OebbLokFinder.Service
                 Arrival = e.Arrival,
                 Departure = e.Departure
             }));
-            await RollingstockService.UpdateVehilce(rollingstock);
+            await RollingstockService.UpdateRollingStockAsync(rollingstock);
         });
 
         private class RollingstockStopDto
