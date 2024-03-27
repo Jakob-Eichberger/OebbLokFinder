@@ -71,12 +71,12 @@ namespace OebbLokFinder.Service
         public async Task UpdateVehilce(Rollingstock rollingstock) => await Db.UpdateAsync(rollingstock);
 
         /// <summary>
-        /// Gets all <see cref="Rollingstock"/> objects from the context.
+        /// Gets all ids for every rollingstock object in the context.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Rollingstock>> GetAllVehicles()
+        public async Task<List<int>> GetAllVehicleIds()
         {
-            return await Db.Rollingstocks.ToListAsync();
+            return await Db.Rollingstocks.Select(e => e.Id).ToListAsync();
         }
     }
 }
