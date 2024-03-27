@@ -28,5 +28,4 @@
         </DataTemplate>
     </TabbedPage.ItemTemplate>
     <local:LokFinder></local:LokFinder>
-    <local:VehicleManagment></local:VehicleManagment>
 </TabbedPage>
