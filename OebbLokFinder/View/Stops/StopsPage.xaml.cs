@@ -26,7 +26,7 @@ public partial class StopsPage : ContentPage, INotifyPropertyChanged
     private void Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
         VSLStops.Clear();
-        var stops = Db.Stops.Include(e => e.Vehicle).ToList().Where(e => e.Station.StationName == Station && (e.Arrival ?? e.Departure) >= DateTime.Now).OrderBy(e => e.Arrival ?? e.Departure);
+        var stops = Db.Stops.Include(e => e.Rollingstock).ToList().Where(e => e.Station.StationName == Station && (e.Arrival ?? e.Departure) >= DateTime.Now).OrderBy(e => e.Arrival ?? e.Departure);
         foreach (var stop in stops)
         {
             VSLStops.Add(new StopView(stop));

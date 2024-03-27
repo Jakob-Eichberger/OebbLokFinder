@@ -22,7 +22,7 @@ namespace OebbLokFinder.View
             builder.Services.AddDbContext<Database>();
             builder.Services.AddSingleton<OebbWebService>();
             builder.Services.AddSingleton<StationService>();
-            builder.Services.AddSingleton<VehicleService>();
+            builder.Services.AddSingleton<RollingstockService>();
             builder.Services.AddSingleton<SettingService>();
 
             ServiceProvider i = builder.Services.BuildServiceProvider();

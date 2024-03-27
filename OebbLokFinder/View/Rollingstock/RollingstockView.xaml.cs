@@ -4,10 +4,10 @@ namespace OebbLokFinder.View.Rollingstock;
 
 public partial class RollingstockView : ContentView
 {
-    public RollingstockView(int vehicleId)
+    public RollingstockView(int rollingstockId)
     {
         InitializeComponent();
     }
 
-    public Vehicle Vehicle { get; set; }
+    public Model.Rollingstock Rollingstock { get; set; }
 }

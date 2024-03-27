@@ -6,9 +6,9 @@ namespace OebbLokFinder.Model
     {
         public int Id { get; set; }
 
-        public Vehicle Vehicle { get; set; }
+        public Rollingstock Rollingstock { get; set; }
 
-        public int VehicleId { get; set; }
+        public int RollingstockId { get; set; }
 
         public Station Station { get; set; }
 

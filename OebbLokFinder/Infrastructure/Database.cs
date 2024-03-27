@@ -20,7 +20,7 @@ namespace OebbLokFinder.Infrastructure
 
         public virtual DbSet<Stop> Stops => Set<Stop>();
 
-        public virtual DbSet<Vehicle> Vehicles => Set<Vehicle>();
+        public virtual DbSet<Rollingstock> Rollingstocks => Set<Rollingstock>();
 
         public virtual DbSet<Setting> Settings => Set<Setting>();
 

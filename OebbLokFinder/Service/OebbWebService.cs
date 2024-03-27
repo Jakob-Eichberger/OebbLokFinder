@@ -17,11 +17,11 @@ namespace OebbLokFinder.Service
     {
         private const string ApiURL = "https://konzern-apps.web.oebb.at/lok/index/";
 
-        public OebbWebService(Database db, StationService stationService, VehicleService vehicleService)
+        public OebbWebService(Database db, StationService stationService, RollingstockService rollingstockService)
         {
             Db = db;
             StationService = stationService;
-            VehicleService = vehicleService;
+            RollingstockService = rollingstockService;
         }
 
         public event EventHandler? FetchedData = default;
@@ -30,54 +30,54 @@ namespace OebbLokFinder.Service
 
         public StationService StationService { get; }
 
-        public VehicleService VehicleService { get; }
+        public RollingstockService RollingstockService { get; }
 
-        public async Task UpdateStopsForAllVehicles(Action<double>? vehicleLoaded = null) => await Task.Run(async () =>
+        public async Task UpdateStopsForAllRollingstock(Action<double>? rollingstockLoaded = null) => await Task.Run(async () =>
         {
-            vehicleLoaded?.Invoke(0);
+            rollingstockLoaded?.Invoke(0);
             var rnd = new Random();
             double count = 0;
-            double max = Db.Vehicles.Count();
-            foreach (var vehicle in Db.Vehicles.ToList())
+            double max = Db.Rollingstocks.Count();
+            foreach (var rollingstock in Db.Rollingstocks.ToList())
             {
-                await UpdateStopsAsync(vehicle.ClassNumber, vehicle.SerialNumber, vehicle.Name, vehicle.AddedManually);
+                await UpdateStopsAsync(rollingstock.ClassNumber, rollingstock.SerialNumber, rollingstock.Name, rollingstock.AddedManually);
                 await Task.Delay(new TimeSpan(0, 0, rnd.Next(1, 4)));
-                vehicleLoaded?.Invoke(count++ / max);
+                rollingstockLoaded?.Invoke(count++ / max);
             }
             FetchedData?.Invoke(this, null);
         });
 
-        public async Task UpdateVehiclesFromLokfinderOebbWebsiteListe() => await Task.Run(async () =>
+        public async Task UpdateRollingstockFromLokfinderOebbWebsiteListe() => await Task.Run(async () =>
         {
-            VehicleService.RemoveAllAutomaticallyAddedVehicles();
+            RollingstockService.RemoveAllAutomaticallyAddedRollingstock();
 
             HtmlDocument htmlDoc = new();
             htmlDoc.LoadHtml(await new HttpClient().GetStringAsync("https://lokfinder.oebb.at/"));
 
-            foreach (var vehicle in htmlDoc.DocumentNode.SelectNodes("//oebb-lokfinder-lok"))
+            foreach (var rollingstock in htmlDoc.DocumentNode.SelectNodes("//oebb-lokfinder-lok"))
             {
-                var match = new Regex(@"([0-9]{1,4})\.([0-9]{1,4})").Match(vehicle.GetAttributeValue("unit-number", ""));
+                var match = new Regex(@"([0-9]{1,4})\.([0-9]{1,4})").Match(rollingstock.GetAttributeValue("unit-number", ""));
 
-                await Db.AddAsync(new Vehicle
+                await Db.AddAsync(new Rollingstock
                 {
                     AddedManually = false,
                     ClassNumber = int.Parse(match.Groups[1].Value),
                     SerialNumber = int.Parse(match.Groups[2].Value),
-                    Name = vehicle.GetAttributeValue("label", "")
+                    Name = rollingstock.GetAttributeValue("label", "")
                 });
             }
 
             FetchedData?.Invoke(this, null);
         });
 
-        private async Task<IEnumerable<VehicleStopDto>> GetStopsForVehicle(Vehicle vehicle) => await Task.Run(async () =>
+        private async Task<IEnumerable<RollingstockStopDto>> GetStopsForRollingstock(Rollingstock rollingstock) => await Task.Run(async () =>
         {
-            var uri = new Uri(@$"{ApiURL}{vehicle.ClassNumber:D4}.{vehicle.SerialNumber:D4}");
+            var uri = new Uri(@$"{ApiURL}{rollingstock.ClassNumber:D4}.{rollingstock.SerialNumber:D4}");
             var response = await new HttpClient().GetAsync(uri);
             if (response.StatusCode is HttpStatusCode.OK)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<VehicleStopDto>>(content) ?? [];
+                return JsonConvert.DeserializeObject<List<RollingstockStopDto>>(content) ?? [];
             }
             else
             {
@@ -90,19 +90,19 @@ namespace OebbLokFinder.Service
         /// </summary>
         /// <param name="classNumber"></param>
         /// <param name="serialNumber"></param>
-        /// <param name="vehicleName"></param>
+        /// <param name="rollingstockName"></param>
         /// <param name="addedManually"></param>
         /// <returns></returns>
-        private async Task UpdateStopsAsync(int classNumber, int serialNumber, string vehicleName = "", bool addedManually = true) => await Task.Run(async () =>
+        private async Task UpdateStopsAsync(int classNumber, int serialNumber, string rollingstockName = "", bool addedManually = true) => await Task.Run(async () =>
         {
-            Vehicle vehicle = await VehicleService.GetOrCreatVehicleAsync(classNumber, serialNumber, vehicleName, addedManually);
+            Rollingstock rollingstock = await RollingstockService.GetOrCreatRollingstockAsync(classNumber, serialNumber, rollingstockName, addedManually);
 
-            await VehicleService.RemoveStationsFromVehilce(vehicle);
+            await RollingstockService.RemoveStationsFromVehilce(rollingstock);
 
-            var stops = await GetStopsForVehicle(vehicle);
-            vehicle.Stops.AddRange(stops.Select(e => new Stop()
+            var stops = await GetStopsForRollingstock(rollingstock);
+            rollingstock.Stops.AddRange(stops.Select(e => new Stop()
             {
-                Vehicle = vehicle,
+                Rollingstock = rollingstock,
                 Station = new Station
                 {
                     StationName = e.Name.Trim(),
@@ -113,10 +113,10 @@ namespace OebbLokFinder.Service
                 Arrival = e.Arrival,
                 Departure = e.Departure
             }));
-            await VehicleService.UpdateVehilce(vehicle);
+            await RollingstockService.UpdateVehilce(rollingstock);
         });
 
-        private class VehicleStopDto
+        private class RollingstockStopDto
         {
             [JsonProperty("abbr")]
             public string Abbr { get; set; }
