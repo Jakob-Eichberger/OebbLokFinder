@@ -47,7 +47,7 @@ namespace OebbLokFinder.Service
             FetchedData?.Invoke(this, null);
         });
 
-        public async Task UpdateRollingstockFromLokfinderOebbWebsiteListe() => await Task.Run(async () =>
+        public async Task UpdateRollingstockFromLokfinderOebbWebsiteListeAsync() => await Task.Run(async () =>
         {
             RollingstockService.RemoveAllAutomaticallyAddedRollingstock();
 
