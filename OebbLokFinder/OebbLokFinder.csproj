@@ -66,6 +66,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\Rollingstock\RollingstockPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Rollingstock\RollingstockView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Stops\StopsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
