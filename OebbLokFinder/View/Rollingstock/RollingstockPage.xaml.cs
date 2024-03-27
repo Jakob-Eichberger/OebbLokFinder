@@ -8,34 +8,34 @@ public partial class RollingstockPage : ContentPage
     {
         RollingstockService = App.ServiceProvider.GetService<RollingstockService>();
         RollingstockService.RollingstocksAddedOrDeleted += RollingstockService_RollingstocksAddedOrDeleted;
+
+        OebbWebService = App.ServiceProvider.GetService<OebbWebService>();
+        OebbWebService.FetchedData += (a, b) => RenderVehicleViews();
         InitializeComponent();
     }
 
-    private async void RollingstockService_RollingstocksAddedOrDeleted(object? sender, EventArgs e)
-    {
-        await NewMethod();
-    }
+    private void RollingstockService_RollingstocksAddedOrDeleted(object? sender, EventArgs e) => RenderVehicleViews();
 
-    private async Task NewMethod()
+    private void RenderVehicleViews() => Dispatcher.Dispatch(async () =>
     {
-        VSLRollingstocks.Clear();
-        (await RollingstockService.GetAllVehicleIds()).ForEach(vehicle => VSLRollingstocks.Children.Add(new RollingstockView(vehicle)));
-    }
+        var x = new VerticalStackLayout();
+        (await RollingstockService.GetAllVehicleIds()).Select(e => new RollingstockView(e)).ToList().ForEach(e => x.Children.Add(e));
+        SVRollingstocks.Content = x;
+    });
 
     public RollingstockService RollingstockService { get; set; }
+
+    public OebbWebService OebbWebService { get; set; }
 
     private async void BtnAddRollingstock_Pressed(object sender, EventArgs e)
     {
         await RollingstockService.GetOrCreatRollingstockAsync(0, 0);
     }
 
-    private void BtnAddAdvertRollingstock_Pressed(object sender, EventArgs e)
+    private async void BtnAddAdvertRollingstock_Pressed(object sender, EventArgs e)
     {
-
+        await OebbWebService.UpdateRollingstockFromLokfinderOebbWebsiteListeAsync();
     }
 
-    private async void ContentPage_Loaded(object sender, EventArgs e)
-    {
-        await NewMethod();
-    }
+    private void ContentPage_Loaded(object sender, EventArgs e) => RenderVehicleViews();
 }
