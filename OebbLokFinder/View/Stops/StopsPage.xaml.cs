@@ -3,7 +3,7 @@ using OebbLokFinder.Infrastructure;
 using OebbLokFinder.Service;
 using System.ComponentModel;
 
-namespace OebbLokFinder.View;
+namespace OebbLokFinder.View.Stops;
 
 public partial class StopsPage : ContentPage, INotifyPropertyChanged
 {

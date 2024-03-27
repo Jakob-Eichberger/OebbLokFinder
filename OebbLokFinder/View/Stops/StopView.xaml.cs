@@ -1,4 +1,4 @@
-namespace OebbLokFinder.View;
+namespace OebbLokFinder.View.Stops;
 
 public partial class StopView : ContentView
 {
