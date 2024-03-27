@@ -22,9 +22,15 @@ namespace OebbLokFinder.Service
     public interface ISetting
     {
         /// <summary>
-        /// Holds the hours of how many hours need to be preloaded for a given rollingstock.
+        /// Holds the hours that need to be preloaded for a given rollingstock.
         /// </summary>
-        [Option(DefaultValue = 3)]
+        [Option(DefaultValue = 6)]
         public int RollingStockDataPreloadMin { get; set; }
+
+        /// <summary>
+        /// Holds the hours of how often a rolling stock should be refreshed. Use 0 to turn automatic refresh off.
+        /// </summary>
+        [Option(DefaultValue = 0)]
+        public uint RefreshRollingStockCycle { get; set; }
     }
 }
