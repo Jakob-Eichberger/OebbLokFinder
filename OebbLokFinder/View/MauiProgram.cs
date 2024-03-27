@@ -19,11 +19,12 @@ namespace OebbLokFinder.View
             builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddDbContext<Database>();
-            builder.Services.AddSingleton<OebbWebService>();
-            builder.Services.AddSingleton<StationService>();
-            builder.Services.AddSingleton<RollingstockService>();
-            builder.Services.AddSingleton<SettingService>();
+            builder.Services.AddDbContext<Database>()
+                            .AddSingleton<OebbWebService>()
+                            .AddSingleton<StationService>()
+                            .AddSingleton<RollingstockService>()
+                            .AddSingleton<SettingService>()
+                            .AddLogging();
 
             ServiceProvider i = builder.Services.BuildServiceProvider();
             return builder.Build();
