@@ -1,4 +1,5 @@
-﻿using OebbLokFinder.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using OebbLokFinder.Infrastructure;
 using OebbLokFinder.Model;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace OebbLokFinder.Service
 
         private Database Db { get; }
 
-        public async Task<Rollingstock> GetOrCreatRollingstockAsync(int classNumber, int serialNumber, string name = null, bool addedManually = true)
+        public event EventHandler RollingstocksAddedOrDeleted;
+
+        public async Task<Rollingstock> GetOrCreatRollingstockAsync(int classNumber, int serialNumber, string name = "", bool addedManually = true)
         {
             if (classNumber < 0 || serialNumber < 0)
                 throw new ApplicationException($"Invalid paramters");
@@ -33,9 +36,20 @@ namespace OebbLokFinder.Service
                 });
 
                 rollingstock = Db.Rollingstocks.FirstOrDefault(e => e.SerialNumber == serialNumber && e.ClassNumber == classNumber);
+                RollingstocksAddedOrDeleted?.Invoke(this, new());
             }
 
             return rollingstock;
+        }
+
+        /// <summary>
+        /// Finds a <see cref="Rollingstock"/> with a given <paramref name="rollingstockId"/> and returns it. 
+        /// </summary>
+        /// <param name="rollingstockId"></param>
+        /// <returns>Returns a <see cref="Rollingstock"/> object or null.</returns>
+        public async Task<Rollingstock?> GetRollingstockByIdAsync(int rollingstockId)
+        {
+            return await Db.Rollingstocks.FirstOrDefaultAsync(e => e.Id == rollingstockId);
         }
 
         public void RemoveAllAutomaticallyAddedRollingstock()
