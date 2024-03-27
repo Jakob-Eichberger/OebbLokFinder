@@ -11,9 +11,15 @@ public partial class RollingstockPage : ContentPage
         InitializeComponent();
     }
 
-    private void RollingstockService_RollingstocksAddedOrDeleted(object? sender, EventArgs e)
+    private async void RollingstockService_RollingstocksAddedOrDeleted(object? sender, EventArgs e)
+    {
+        await NewMethod();
+    }
+
+    private async Task NewMethod()
     {
         VSLRollingstocks.Clear();
+        (await RollingstockService.GetAllVehicleIds()).ForEach(vehicle => VSLRollingstocks.Children.Add(new RollingstockView(vehicle)));
     }
 
     public RollingstockService RollingstockService { get; set; }
@@ -28,8 +34,8 @@ public partial class RollingstockPage : ContentPage
 
     }
 
-    private void ContentPage_Loaded(object sender, EventArgs e)
+    private async void ContentPage_Loaded(object sender, EventArgs e)
     {
-
+        await NewMethod();
     }
 }
