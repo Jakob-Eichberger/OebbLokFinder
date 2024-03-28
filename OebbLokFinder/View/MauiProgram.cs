@@ -21,6 +21,7 @@ namespace OebbLokFinder.View
 
             builder.Services.AddDbContext<Database>()
                             .AddSingleton<OebbWebService>()
+                            .AddSingleton<StationService>()
                             .AddSingleton<RollingstockService>()
                             .AddSingleton<SettingService>()
                             .AddLogging();
