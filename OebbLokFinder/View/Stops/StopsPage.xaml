@@ -6,6 +6,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="AUTO" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="135" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="75" />
@@ -17,5 +18,7 @@
         <ScrollView  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always">
             <VerticalStackLayout x:Name="VSLStops"/>
         </ScrollView>
+        <Button x:Name="BtnUpdateStops" Text="Update Stops" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Padding="5" Margin="5" Pressed="BtnUpdateStops_Pressed" />
+        <ActivityIndicator IsRunning="true" VerticalOptions="Start" Margin="10" HorizontalOptions="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
     </Grid>
 </ContentPage>
