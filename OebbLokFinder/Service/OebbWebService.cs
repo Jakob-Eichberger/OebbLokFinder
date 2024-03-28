@@ -17,10 +17,9 @@ namespace OebbLokFinder.Service
     {
         private const string ApiURL = "https://konzern-apps.web.oebb.at/lok/index/";
 
-        public OebbWebService(Database db, StationService stationService, RollingstockService rollingstockService)
+        public OebbWebService(Database db, RollingstockService rollingstockService)
         {
             Db = db;
-            StationService = stationService;
             RollingstockService = rollingstockService;
         }
 
@@ -28,24 +27,7 @@ namespace OebbLokFinder.Service
 
         public Database Db { get; }
 
-        public StationService StationService { get; }
-
         public RollingstockService RollingstockService { get; }
-
-        public async Task UpdateStopsForAllRollingstock(Action<double>? rollingstockLoaded = null) => await Task.Run(async () =>
-        {
-            rollingstockLoaded?.Invoke(0);
-            var rnd = new Random();
-            double count = 0;
-            double max = Db.Rollingstocks.Count();
-            foreach (var rollingstock in Db.Rollingstocks.ToList())
-            {
-                await UpdateStopsAsync(rollingstock.ClassNumber, rollingstock.SerialNumber, rollingstock.Name, rollingstock.AddedManually);
-                await Task.Delay(new TimeSpan(0, 0, rnd.Next(1, 4)));
-                rollingstockLoaded?.Invoke(count++ / max);
-            }
-            FetchedData?.Invoke(this, null);
-        });
 
         public async Task UpdateRollingstockFromLokfinderOebbWebsiteListeAsync() => await Task.Run(async () =>
         {
@@ -93,10 +75,8 @@ namespace OebbLokFinder.Service
         /// <param name="rollingstockName"></param>
         /// <param name="addedManually"></param>
         /// <returns></returns>
-        private async Task UpdateStopsAsync(int classNumber, int serialNumber, string rollingstockName = "", bool addedManually = true) => await Task.Run(async () =>
+        public async Task UpdateStopsAsync(Rollingstock rollingstock) => await Task.Run(async () =>
         {
-            Rollingstock rollingstock = await RollingstockService.GetOrCreatRollingstockAsync(classNumber, serialNumber, rollingstockName, addedManually);
-
             await RollingstockService.RemoveStationsFromVehilce(rollingstock);
 
             var stops = await GetStopsForRollingstock(rollingstock);
