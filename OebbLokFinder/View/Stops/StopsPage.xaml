@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OebbLokFinder.View.Stops.StopsPage" Title="Lok Finder">
+             x:Class="OebbLokFinder.View.Stops.StopsPage" Title="Lok Finder" x:Name="StopsCP" IsEnabled="{Binding Source={x:Reference StopsCP}, Path=UpdatingStops}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="135" />
         </Grid.RowDefinitions>
@@ -13,12 +13,12 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Text="Station:" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Margin="5" Padding="5"/>
-        <Picker ItemsSource="{Binding Stations}" SelectedItem="{Binding Station}" SelectedIndexChanged="Picker_SelectedIndexChanged" VerticalOptions="Center" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="1"/>
+        <Label Text="Station:" VerticalOptions="End" Grid.Row="0" Grid.Column="0" Margin="5" Padding="5" />
+        <Picker ItemsSource="{Binding Stations}" SelectedItem="{Binding Station}" SelectedIndexChanged="Picker_SelectedIndexChanged" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="1"/>
         <ScrollView  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always">
             <VerticalStackLayout x:Name="VSLStops"/>
         </ScrollView>
         <Button x:Name="BtnUpdateStops" Text="Update Stops" Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" Padding="5" Margin="5" Pressed="BtnUpdateStops_Pressed" />
-        <ActivityIndicator IsRunning="true" VerticalOptions="Start" Margin="10" HorizontalOptions="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+        <!--<ActivityIndicator IsRunning="true" VerticalOptions="Start" Margin="10" HorizontalOptions="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />-->
     </Grid>
 </ContentPage>
