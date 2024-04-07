@@ -33,7 +33,7 @@ public partial class StopsPage : ContentPage, INotifyPropertyChanged
         get => updatingStops; set
         {
             updatingStops = value;
-            PropertyChanged?.Invoke(this, new(null));
+            PropertyChanged?.Invoke(this, new(nameof(UpdatingStops)));
         }
     }
 
