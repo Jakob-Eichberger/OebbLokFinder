@@ -17,7 +17,7 @@ The **ÖBB Locomotive Route Data App** is a powerful tool built using **.NET MAU
 ## Examples of use
 
 ### Main window
-In the finder tap you can select a station and the app displays all rollingstock that passes through it. To update the data that the app holds click the update stops button. 
+In the finder tab, you can select a station and the app displays all rollingstock that passes through it. To update the data that the app holds click the update stops button. 
 
 ![image](https://github.com/Jakob-Eichberger/OebbLokFinder/assets/53713395/01899075-e8b2-4067-85db-c507fa01df18)
 
