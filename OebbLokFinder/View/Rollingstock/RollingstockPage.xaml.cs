@@ -37,5 +37,5 @@ public partial class RollingstockPage : ContentPage
         await OebbWebService.UpdateRollingstockFromLokfinderOebbWebsiteListeAsync();
     }
 
-    private void ContentPage_Loaded(object sender, EventArgs e) => RenderVehicleViews();
+    private void SVRollingstocks_Loaded(object sender, EventArgs e) => RenderVehicleViews();
 }

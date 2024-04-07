@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OebbLokFinder.View.Rollingstock.RollingstockPage"
-             Title="RollingstockPage" Loaded="ContentPage_Loaded">
+             Title="RollingstockPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -13,8 +13,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ScrollView x:Name="SVRollingstocks" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always">
-            
+        <ScrollView x:Name="SVRollingstocks" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always" Loaded="SVRollingstocks_Loaded">
         </ScrollView>
         <Button Text="Add Rollingstock" x:Name="BtnAddRollingstock" Pressed="BtnAddRollingstock_Pressed" VerticalOptions="Start" Grid.Row="1" Grid.Column="0" Margin="5" Padding="5" />
         <Button Text="Add advertising Rollingstock" x:Name="BtnAddAdvertRollingstock" Pressed="BtnAddAdvertRollingstock_Pressed" VerticalOptions="Start" Grid.Row="1" Grid.Column="1" Margin="5" Padding="5" />
