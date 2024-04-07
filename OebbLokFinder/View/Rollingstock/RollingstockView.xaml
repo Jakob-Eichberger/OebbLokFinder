@@ -4,20 +4,18 @@
              x:Class="OebbLokFinder.View.Rollingstock.RollingstockView" x:Name="RollingstockCV" Loaded="ContentView_Loaded" Padding="5">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="AUTO"/>
-            <ColumnDefinition Width="AUTO"/>
-            <ColumnDefinition Width="AUTO"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="AUTO"/>
+            <ColumnDefinition Width="55"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" >
             <HorizontalStackLayout>
-                <Entry x:Name="EntrClassNumber" Grid.Column="0"  Text="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.ClassNumber, Mode=TwoWay}" IsEnabled="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.AddedManually}" TextChanged="EntrClassNumber_TextChanged" />
+                <Entry x:Name="EntrClassNumber" Text="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.ClassNumber, Mode=TwoWay}" IsEnabled="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.AddedManually}" TextChanged="EntrClassNumber_TextChanged" />
                 <Label Text="." Grid.Column="1" VerticalOptions="End" />
-                <Entry x:Name="EntrSerialNumber" Grid.Column="2" Text="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.SerialNumber, Mode=TwoWay}" IsEnabled="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.AddedManually}" TextChanged="EntrSerialNumber_TextChanged"/>
+                <Entry x:Name="EntrSerialNumber" Text="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.SerialNumber, Mode=TwoWay}" IsEnabled="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.AddedManually}" TextChanged="EntrSerialNumber_TextChanged"/>
             </HorizontalStackLayout>
         </Border>
-        <Entry x:Name="EntrName" Grid.Column="3" Margin="5" Text="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.Name, Mode=TwoWay}" IsEnabled="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.AddedManually}" TextChanged="EntrName_TextChanged"/>
-        <Button x:Name="BtnDeletEntry" Grid.Column="4" Text="X" Pressed="BtnDeletEntry_Pressed" Margin="5"/>
+        <Entry x:Name="EntrName" Grid.Column="1" Margin="5" Text="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.Name, Mode=TwoWay}" IsEnabled="{Binding Source={x:Reference RollingstockCV}, Path=Rollingstock.AddedManually}" TextChanged="EntrName_TextChanged"/>
+        <Button x:Name="BtnDeletEntry" Grid.Column="2" Text="X" Pressed="BtnDeletEntry_Pressed" Margin="5"/>
     </Grid>
 </ContentView>
